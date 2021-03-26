@@ -7,10 +7,10 @@ import Edit from "./components/Edit"
 const App = () => {
     return (
         <Router >
-               <Switch>
+            <Switch>
                 <Route exact path="/" component={Home} />
                 <Route exact path="/add" component={Add} />
-                <Route exact path="/edit" component={Edit} />
+                <Route exact path="/edit/:id" component={Edit} />
                 <Redirect to="/" />
             </Switch>
             
