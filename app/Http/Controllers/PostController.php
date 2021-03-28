@@ -18,15 +18,6 @@ class PostController extends Controller
         return  PostResource::collection(Post::all());
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -36,30 +27,30 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title' =>'required',
+            'description' =>'required',
+        ]);
+        $post = new Post([
+            'title' => $request->title,
+            'description' => $request->description,
+        ]);
+        $post->save();
+        return response()->json([
+            'data' =>'Post created!'
+        ]);
     }
-
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing  specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        //
+       return new PostResource(Post::findorFail($id));
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -70,7 +61,17 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'title' =>'required',
+            'description' =>'required',
+        ]);
+        $post = Post::findorFail($id);
+        $post->title = $request->title;
+        $post->description = $request->description;
+        $post->save();
+        return response()->json([
+            'data' =>'Post updated!'
+        ]);
     }
 
     /**
@@ -81,6 +82,7 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post = Post::findorFail($id);
+        $post->delete();
     }
 }

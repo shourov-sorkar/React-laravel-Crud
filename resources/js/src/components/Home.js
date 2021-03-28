@@ -1,10 +1,71 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import AppContainer from "./AppContainer";
+import api from "../api";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCog } from "@fortawesome/free-solid-svg-icons";
 const Home = () => {
+    const [posts, setPosts] = useState(null);
+    useEffect(() => {
+        
+        api.getAllPosts().then((res) => {
+            const result = res.data;
+            setPosts(result.data);
+        });
+    }, []);
+
+    const renderPosts = () => {
+        if (!posts) {
+            return (
+                <tr>
+                    <td colSpan="4">Loading Posts....</td>
+                </tr>
+            );
+        }
+        if (posts.length == 0) {
+            return (
+                <tr>
+                    <td colSpan="4">There is no post yet. Add one.</td>
+                </tr>
+            );
+        }
+        return posts.map((post) => (
+            <tr>
+                <td>{post.id}</td>
+                <td>{post.title}</td>
+                <td>{post.description}</td>
+                <td>
+                    <div className="dropdown mr-1">
+                        <button
+                            type="button"
+                            className="btn btn-secondary dropdown-toggle"
+                            id="dropdownMenuOffset"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                            data-offset="10,20"
+                        >
+                            <FontAwesomeIcon icon={faCog} />
+                        </button>
+                        <div
+                            className="dropdown-menu"
+                            aria-labelledby="dropdownMenuOffset"
+                        >
+                            <Link to="/edit/1" className="dropdown-item">
+                                Edit
+                            </Link>
+                            <Link to="/" className="dropdown-item">
+                                Delete
+                            </Link>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        ));
+    };
     return (
         <AppContainer title="Laravel React - CRUD">
-            <Link to="/add" class="btn btn-primary">
+            <Link to="/add" className="btn btn-primary">
                 Add Post
             </Link>
             <div className="table-responsive">
@@ -17,21 +78,7 @@ const Home = () => {
                             <th>Action</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>1.</td>
-                            <td>Sample Title</td>
-                            <td>Sample Description</td>
-                            <td>
-                                <Link to="/edit/1" className="btn btn-info">
-                                    Edit
-                                </Link>
-                                <Link to="/" className="btn btn-danger">
-                                    Delete
-                                </Link>
-                            </td>
-                        </tr>
-                    </tbody>
+                    <tbody>{renderPosts()}</tbody>
                 </table>
             </div>
         </AppContainer>
