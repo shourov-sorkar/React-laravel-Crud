@@ -11985,25 +11985,28 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-var _getAllPosts$getAllPo;
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 var axios = window.axios;
-var BASE_API_URL = 'https://localhost:8000/api';
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_getAllPosts$getAllPo = {
+var BASE_API_URL = 'http://127.0.0.1:8000/api'; //changes here
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   getAllPosts: function getAllPosts() {
     return axios.get("".concat(BASE_API_URL, "/posts"));
+  },
+  getAllEditPosts: function getAllEditPosts(id) {
+    return (//edited here
+      axios.get("".concat(BASE_API_URL, "/posts/").concat(id, "/edit"))
+    );
+  },
+  addPost: function addPost(post) {
+    return axios.post("".concat(BASE_API_URL, "/posts"), post);
+  },
+  updatePost: function updatePost(post, id) {
+    return axios.put("".concat(BASE_API_URL, "/posts/").concat(id), post);
+  },
+  deletePost: function deletePost(id) {
+    return axios["delete"]("".concat(BASE_API_URL, "/posts/").concat(id), post);
   }
-}, _defineProperty(_getAllPosts$getAllPo, "getAllPosts", function getAllPosts(id) {
-  return axios.get("".concat(BASE_API_URL, "/posts/").concat(id, "/edit"));
-}), _defineProperty(_getAllPosts$getAllPo, "addPost", function addPost(post) {
-  return axios.post("".concat(BASE_API_URL, "/posts"), post);
-}), _defineProperty(_getAllPosts$getAllPo, "updatePost", function updatePost(post, id) {
-  return axios.put("".concat(BASE_API_URL, "/posts/").concat(id), post);
-}), _defineProperty(_getAllPosts$getAllPo, "deletePost", function deletePost(id) {
-  return axios["delete"]("".concat(BASE_API_URL, "/posts/").concat(id), post);
-}), _getAllPosts$getAllPo);
+});
 
 /***/ }),
 
@@ -12297,8 +12300,10 @@ var Home = function Home() {
       setPosts = _useState2[1];
 
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    _api__WEBPACK_IMPORTED_MODULE_2__.default.getAllPosts().then(function (res) {
+    var getalldata = _api__WEBPACK_IMPORTED_MODULE_2__.default.getAllPosts();
+    getalldata.then(function (res) {
       var result = res.data;
+      console.log(result);
       setPosts(result.data);
     });
   }, []);

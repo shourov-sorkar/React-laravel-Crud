@@ -38,6 +38,8 @@ class PostController extends Controller
         $post->save();
         return response()->json([
             'data' =>'Post created!'
+            ,
+            'status' => '200'
         ]);
     }
     /**
@@ -70,7 +72,8 @@ class PostController extends Controller
         $post->description = $request->description;
         $post->save();
         return response()->json([
-            'data' =>'Post updated!'
+            'data' =>'Post updated!',
+            'status' => '200'
         ]);
     }
 

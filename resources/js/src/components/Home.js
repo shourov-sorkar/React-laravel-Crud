@@ -7,9 +7,11 @@ import { faCog } from "@fortawesome/free-solid-svg-icons";
 const Home = () => {
     const [posts, setPosts] = useState(null);
     useEffect(() => {
+        const getalldata =api.getAllPosts();
         
-        api.getAllPosts().then((res) => {
+        getalldata.then((res) => {
             const result = res.data;
+            console.log(result);
             setPosts(result.data);
         });
     }, []);
