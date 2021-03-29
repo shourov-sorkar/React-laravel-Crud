@@ -12,7 +12,6 @@ const Home = () => {
 
         getalldata.then((res) => {
             const result = res.data;
-            console.log(result);
             setPosts(result.data);
         });
     };
@@ -68,6 +67,7 @@ const Home = () => {
                                 type="button"
                                 className="dropdown-item"
                                 onClick={() => {
+                                    console.log(post.id);
                                     api.deletePost(post.id)
                                         .then(fetchPosts)
                                         .catch((err) => {

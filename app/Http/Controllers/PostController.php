@@ -52,7 +52,21 @@ class PostController extends Controller
     {
        return new PostResource(Post::findorFail($id));
     }
-
+    // public function show(Request $request, $id)
+    // {
+    //     $request->validate([
+    //         'title' =>'required',
+    //         'description' =>'required',
+    //     ]);
+    //     $post = Post::findorFail($id);
+    //     $post->title = $request->title;
+    //     $post->description = $request->description;
+    //     $post->save();
+    //     return response()->json([
+    //         'data' =>'Post updated!',
+    //         'status' => '200'
+    //     ]);
+    // }
 
     /**
      * Update the specified resource in storage.

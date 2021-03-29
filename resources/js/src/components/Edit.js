@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import {useHistory, useParams } from "react-router-dom";
 import AppContainer from "./AppContainer";
 import api from "../api"
-const Edit = () => {
+const Edit = (props) => {
+    console.log(props);
     const { id } = useParams();
     const history = useHistory();
     const [loading, setLoading] = useState(false);
@@ -25,9 +26,11 @@ const Edit = () => {
     };
 
     useEffect(() => {
-        api.getAllPosts(id).then(res => {
+        const ID = props.match.params.id;
+        api.getAllPosts(ID).then(res => {
             const result = res.data;
             const post = result.data;
+            console.log(post);
             setTitle(post.title);
             setDescription(post.description);
         })

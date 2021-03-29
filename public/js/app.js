@@ -12004,7 +12004,7 @@ var BASE_API_URL = 'http://127.0.0.1:8000/api'; //changes here
     return axios.put("".concat(BASE_API_URL, "/posts/").concat(id), post);
   },
   deletePost: function deletePost(id) {
-    return axios["delete"]("".concat(BASE_API_URL, "/posts/").concat(id), post);
+    return axios["delete"]("".concat(BASE_API_URL, "/posts/").concat(id));
   }
 });
 
@@ -12240,7 +12240,9 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
-var Edit = function Edit() {
+var Edit = function Edit(props) {
+  console.log(props);
+
   var _useParams = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_5__.useParams)(),
       id = _useParams.id;
 
@@ -12304,9 +12306,11 @@ var Edit = function Edit() {
   }();
 
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
-    _api__WEBPACK_IMPORTED_MODULE_3__.default.getAllPosts(id).then(function (res) {
+    var ID = props.match.params.id;
+    _api__WEBPACK_IMPORTED_MODULE_3__.default.getAllPosts(ID).then(function (res) {
       var result = res.data;
       var post = result.data;
+      console.log(post);
       setTitle(post.title);
       setDescription(post.description);
     });
@@ -12407,7 +12411,6 @@ var Home = function Home() {
     var getalldata = _api__WEBPACK_IMPORTED_MODULE_2__.default.getAllPosts();
     getalldata.then(function (res) {
       var result = res.data;
-      console.log(result);
       setPosts(result.data);
     });
   };
@@ -12468,6 +12471,7 @@ var Home = function Home() {
                 type: "button",
                 className: "dropdown-item",
                 onClick: function onClick() {
+                  console.log(post.id);
                   _api__WEBPACK_IMPORTED_MODULE_2__.default.deletePost(post.id).then(fetchPosts)["catch"](function (err) {
                     alert("Failed to delete post " + post.id);
                   });

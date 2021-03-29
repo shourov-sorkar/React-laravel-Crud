@@ -11,5 +11,5 @@ export default{
     updatePost: (post, id) => 
         axios.put(`${BASE_API_URL}/posts/${id}`, post),
     deletePost: (id) => 
-        axios.delete(`${BASE_API_URL}/posts/${id}`, post),
-}   
+        axios.delete(`${BASE_API_URL}/posts/${id}`),
+}
