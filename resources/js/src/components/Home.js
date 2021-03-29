@@ -4,6 +4,7 @@ import AppContainer from "./AppContainer";
 import api from "../api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCog } from "@fortawesome/free-solid-svg-icons";
+import swal from "sweetalert";
 const Home = () => {
     const [posts, setPosts] = useState(null);
 
@@ -13,6 +14,30 @@ const Home = () => {
         getalldata.then((res) => {
             const result = res.data;
             setPosts(result.data);
+        });
+    };
+
+    const DeletePost = (id) => {
+        swal({
+            title: "Are you sure?",
+            text: "Once deleted, you will not be able to recover this post!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((willDelete) => {
+            if (willDelete) {
+                api.deletePost(id)
+
+                    .then(fetchPosts)
+                    .catch((err) => {
+                        alert("Failed to delete post " + post.id);
+                    });
+                swal("Poof! Your Post has been deleted!", {
+                    icon: "success",
+                });
+            } else {
+                swal("Your Post  is safe!");
+            }
         });
     };
 
@@ -67,15 +92,7 @@ const Home = () => {
                                 type="button"
                                 className="dropdown-item"
                                 onClick={() => {
-                                    console.log(post.id);
-                                    api.deletePost(post.id)
-                                        .then(fetchPosts)
-                                        .catch((err) => {
-                                            alert(
-                                                "Failed to delete post " +
-                                                    post.id
-                                            );
-                                        });
+                                    DeletePost(post.id);
                                 }}
                             >
                                 Delete
