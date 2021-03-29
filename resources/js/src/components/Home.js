@@ -6,14 +6,19 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCog } from "@fortawesome/free-solid-svg-icons";
 const Home = () => {
     const [posts, setPosts] = useState(null);
-    useEffect(() => {
-        const getalldata =api.getAllPosts();
-        
+
+    const fetchPosts = () => {
+        const getalldata = api.getAllPosts();
+
         getalldata.then((res) => {
             const result = res.data;
             console.log(result);
             setPosts(result.data);
         });
+    };
+
+    useEffect(() => {
+        fetchPosts();
     }, []);
 
     const renderPosts = () => {
@@ -53,12 +58,28 @@ const Home = () => {
                             className="dropdown-menu"
                             aria-labelledby="dropdownMenuOffset"
                         >
-                            <Link to="/edit/1" className="dropdown-item">
+                            <Link
+                                to={`/edit/${post.id}`}
+                                className="dropdown-item"
+                            >
                                 Edit
                             </Link>
-                            <Link to="/" className="dropdown-item">
+                            <button
+                                type="button"
+                                className="dropdown-item"
+                                onClick={() => {
+                                    api.deletePost(post.id)
+                                        .then(fetchPosts)
+                                        .catch((err) => {
+                                            alert(
+                                                "Failed to delete post " +
+                                                    post.id
+                                            );
+                                        });
+                                }}
+                            >
                                 Delete
-                            </Link>
+                            </button>
                         </div>
                     </div>
                 </td>
