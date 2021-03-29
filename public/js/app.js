@@ -12241,8 +12241,6 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 var Edit = function Edit(props) {
-  console.log(props);
-
   var _useParams = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_5__.useParams)(),
       id = _useParams.id;
 
@@ -12278,26 +12276,27 @@ var Edit = function Edit(props) {
               }, id);
 
             case 4:
+              swal("Good job!", "Post Updated Successfully!", "success");
               history.push('/');
-              _context.next = 10;
+              _context.next = 11;
               break;
 
-            case 7:
-              _context.prev = 7;
+            case 8:
+              _context.prev = 8;
               _context.t0 = _context["catch"](1);
               alert("Faild to Edit post");
 
-            case 10:
-              _context.prev = 10;
+            case 11:
+              _context.prev = 11;
               setLoading(false);
-              return _context.finish(10);
+              return _context.finish(11);
 
-            case 13:
+            case 14:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, null, [[1, 7, 10, 13]]);
+      }, _callee, null, [[1, 8, 11, 14]]);
     }));
 
     return function onEditSubmit() {
@@ -12310,7 +12309,6 @@ var Edit = function Edit(props) {
     _api__WEBPACK_IMPORTED_MODULE_3__.default.getAllPosts(ID).then(function (res) {
       var result = res.data;
       var post = result.data;
-      console.log(post);
       setTitle(post.title);
       setDescription(post.description);
     });

@@ -3,7 +3,6 @@ import {useHistory, useParams } from "react-router-dom";
 import AppContainer from "./AppContainer";
 import api from "../api"
 const Edit = (props) => {
-    console.log(props);
     const { id } = useParams();
     const history = useHistory();
     const [loading, setLoading] = useState(false);
@@ -17,6 +16,7 @@ const Edit = (props) => {
             await api.updatePost({
                 title, description,
             }, id);
+            swal("Good job!", "Post Updated Successfully!", "success");
             history.push('/')
         } catch{
             alert("Faild to Edit post")
@@ -30,7 +30,6 @@ const Edit = (props) => {
         api.getAllPosts(ID).then(res => {
             const result = res.data;
             const post = result.data;
-            console.log(post);
             setTitle(post.title);
             setDescription(post.description);
         })
